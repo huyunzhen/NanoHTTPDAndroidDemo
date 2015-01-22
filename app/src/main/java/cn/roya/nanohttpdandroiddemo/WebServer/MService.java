@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.io.IOException;
 
-import cn.roya.lightshare.widgets.Utils;
-import cn.roya.lightshare.widgets.WebServer;
 
 
 public class MService extends android.app.Service {
@@ -22,8 +21,14 @@ public class MService extends android.app.Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.e(TAG,"onCreate");
         local = IPUtils.getIPAddress(true);
         mhttpd = new MHTTPD(local, port,getApplicationContext());
+        try {
+            mhttpd.start();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -51,6 +56,7 @@ public class MService extends android.app.Service {
 
     public class mBinder extends Binder{
         public MService getService(){
+            Log.d(TAG,"getService");
             return MService.this;
         }
     }

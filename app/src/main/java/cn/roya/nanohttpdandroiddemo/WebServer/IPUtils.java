@@ -124,7 +124,7 @@ public class IPUtils {
                 }
             }
         } catch (Exception ex) { } // for now eat exceptions
-        return "";
+        return "127.0.0.1";
     }
 
 

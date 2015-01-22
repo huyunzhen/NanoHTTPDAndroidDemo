@@ -1,8 +1,11 @@
 package cn.roya.nanohttpdandroiddemo;
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +24,8 @@ public class MainActivity extends ActionBarActivity {
 
     private EditText editTextMsg;
     private Button buttonMsg;
+
+    Handler handler;
 
     ServiceConnection serviceConnection;
     MService mService;
@@ -62,6 +67,22 @@ public class MainActivity extends ActionBarActivity {
             }
         };
 
+        Intent serviceIntent;
+        serviceIntent = new Intent(getApplicationContext(), MService.class);
+        bindService(serviceIntent, serviceConnection, BIND_AUTO_CREATE);
+
+
+        handler = new Handler(){
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        textView.setText("listening:"+mService.getLocal());
+                        break;
+                }
+                super.handleMessage(msg);
+            }
+        };
+
         new Thread(new Runnable() {
             boolean waiting = true;
             @Override
@@ -69,7 +90,9 @@ public class MainActivity extends ActionBarActivity {
                 do {
                     if (mService != null){
 
-                        textView.setText("listening:"+mService.getLocal());
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
 
                         waiting = false;
                         break;
