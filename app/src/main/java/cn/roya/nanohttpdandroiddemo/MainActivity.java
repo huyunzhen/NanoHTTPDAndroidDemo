@@ -3,6 +3,7 @@ package cn.roya.nanohttpdandroiddemo;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -24,11 +25,12 @@ public class MainActivity extends ActionBarActivity {
 
     private EditText editTextMsg;
     private Button buttonMsg;
+    private Button buttonAdd;
 
-    Handler handler;
+    private Handler handler;
 
-    ServiceConnection serviceConnection;
-    MService mService;
+    private ServiceConnection serviceConnection;
+    private MService mService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class MainActivity extends ActionBarActivity {
         editTextMsg = (EditText)findViewById(R.id.editText_msg);
         buttonMsg = (Button)findViewById(R.id.button_msg);
 
+        buttonAdd = (Button)findViewById(R.id.button_add);
+
         buttonMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +56,16 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 2);
+            }
+        });
+
 
 //      get service
         serviceConnection = new ServiceConnection() {
@@ -121,4 +135,18 @@ public class MainActivity extends ActionBarActivity {
         }).start();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2) {
+            Uri imageUri = data.getData();
+            mService.add(getFileNameFormUri(imageUri),"image/png",imageUri);
+        }
+    }
+
+    private String getFileNameFormUri(Uri uri){
+        String addr = uri.toString();
+        return addr.substring(addr.lastIndexOf("/") + 1);
+    }
 }

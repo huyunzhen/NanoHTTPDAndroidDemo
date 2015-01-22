@@ -30,4 +30,10 @@
             android:layout_height="wrap_content"
             android:text="set Messge"/>
         </LinearLayout>
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add image"/>
 </LinearLayout>
