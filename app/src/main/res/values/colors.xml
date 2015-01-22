@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#8BC34A</color>
+    <color name="colorPrimaryDark">#8BC34A</color>
+    <color name="colorPrimaryBlack">#689F38</color>
+
+    <color name="colorSecondary">#4db6ac</color>
+    <color name="colorSecondaryDark">#357f78</color>
+
+    <color name="windowColor">#f6f6f6</color>
+    <color name="windowBackgroundColor">#f6f6f6</color>
+
+    <color name="black_translucent">#686868</color>
+    <color name="black_translucent_background">#969696</color>
+
+    <color name="background_line">#e2e2e2</color>
+
+</resources>
