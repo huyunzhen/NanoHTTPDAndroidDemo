@@ -55,7 +55,7 @@ public class MHTTPD extends NanoHTTPD {
                     "<h1>" + HTTP_MSG + "<h1>";
 
             for (DataCache.StreamData i : DateCacheUtils.getDatabase().getAll()){
-                msg += "<img src=" +i.filename + ">";
+                msg += "<img src=\"" +i.filename + "\"height=\"300\">";
             }
             msg +=          "</body></html>";
 
